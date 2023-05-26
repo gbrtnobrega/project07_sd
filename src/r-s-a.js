@@ -118,4 +118,9 @@ function isPrime(num) {
   console.log("Mensagem decodificada:", decryptedMessage);
  }
 
- main();
+module.exports= {
+  isPrime,
+  encrypt,
+  decrypt,
+  generateRSAKeys,
+ }
