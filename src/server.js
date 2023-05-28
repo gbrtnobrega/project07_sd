@@ -18,15 +18,40 @@ app.use('/',(req , res) =>{
 
 let messages =[];
 
+let keys = generateRSAKeys(); 
+let publicKey = keys.publicKey;
+let privateKey = keys.privateKey;
+
 io.on('connection', socket  => {
-  console.log(`Socket conectado: ${socket.id}`);
+    console.log(`Socket conectado: ${socket.id}`);
+    
+    socket.emit('previousMessages', messages);
+
+    socket.broadcast.emit("NewUser", socket.id);
   
-  socket.emit('previousMessages', messages);
+    socket.on('sendMessage', data =>{
+        const encryptedMessage = encrypt(data.message, publicKey);
 
-  socket.on('sendMessage', data =>{
-    messages.push(data);
-    socket.broadcast.emit('receivedMessage', data);
+        // Adiciona a mensagem criptografada ao objeto de dados
+        const encryptedData = {
+          author: data.author,
+          message: encryptedMessage,
+        };
+
+      console.log(`Nova mensagem enviada: Autor: ${data.author}, Mensagem Criptografada: ${encryptedMessage}`);
+      
+        const decryptedMessage = decrypt(encryptedMessage, privateKey);
+
+        const decryptedData = {
+            author: encryptedData.author,
+            message: decryptedMessage
+        };
+      messages.push(decryptedData);
+      socket.broadcast.emit('receivedMessage', decryptedData);
+      console.log(`Nova mensagem recebida: Autor: ${encryptedData.author}, Mensagem Descriptografada: ${decryptedMessage}`);
+
+    });
   });
-});
+  
 
-server.listen(3000);
+server.listen(3000, '0.0.0.0');
