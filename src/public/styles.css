@@ -37,6 +37,7 @@ html, body {
   }
   
   .messages {
+    overflow: auto;  
     width: 600px;
     height: 400px;
     margin: 20px 0;
