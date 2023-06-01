@@ -36,9 +36,8 @@ html, body {
     margin-top: 10px;
   }
   
-  .messages {
+  .messages { 
     overflow: auto;
-    
     width: 600px;
     height: 400px;
     margin: 20px 0;
