@@ -1,5 +1,5 @@
-// Função para verificar se um número é primo
-function isPrime(num) {
+      // Função para verificar se um número é primo
+   function isPrime(num) {
     for (let i = 2, sqrt = Math.sqrt(num); i <= sqrt; i++) {
       if (num % i === 0) {
         return false;
@@ -45,15 +45,13 @@ function isPrime(num) {
   function generateRSAKeys() {
     let p, q, n, phi, e, d;
   
-    const typedArray = new Uint8Array(1);
-
     // Gerar dois números primos grandes e diferentes
     do {
-      p = crypto.getRandomValues(typedArray)[0] * 25000;
+      p = Math.floor(Math.random() * 100) + 50;
     } while (!isPrime(p));
   
     do {
-      q = crypto.getRandomValues(typedArray)[0] * 25000;
+      q = Math.floor(Math.random() * 100) + 50;
     } while (!isPrime(q) || q === p);
   
     // Calcular o módulo
@@ -107,18 +105,20 @@ function isPrime(num) {
   
   // Exemplo de uso
   function main(){
-    let keys = generateRSAKeys();
-    let publicKey = keys.publicKey;
-    let privateKey = keys.privateKey;
-    
-    let message = "Pneumoultramicroscopicossilicovulcanoconiótico";
-    let encryptedMessage = encrypt(message, publicKey);
-    let decryptedMessage = decrypt(encryptedMessage, privateKey);
-    
-    console.log("Mensagem original:", message);
-    console.log("Mensagem criptografada:", encryptedMessage);
-    console.log("Mensagem decodificada:", decryptedMessage);
- }
+let keys = generateRSAKeys();
+let publicKey = keys.publicKey;
+let privateKey = keys.privateKey;
+
+let message = "Pneumoultramicroscopicossilicovulcanoconiótico";
+let encryptedMessage = encrypt(message, publicKey);
+let decryptedMessage = decrypt(encryptedMessage, privateKey);
+
+console.log("Mensagem original:", message);
+console.log("Mensagem criptografada:", encryptedMessage);
+console.log("Mensagem decodificada:", decryptedMessage);
+}
+
+main();
 
 module.exports= {
   isPrime,
