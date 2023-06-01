@@ -45,13 +45,15 @@ function isPrime(num) {
   function generateRSAKeys() {
     let p, q, n, phi, e, d;
   
+    const typedArray = new Uint8Array(1);
+
     // Gerar dois números primos grandes e diferentes
     do {
-      p = Math.floor(Math.random() * 100) + 50;
+      p = crypto.getRandomValues(typedArray)[0] * 25000;
     } while (!isPrime(p));
   
     do {
-      q = Math.floor(Math.random() * 100) + 50;
+      q = crypto.getRandomValues(typedArray)[0] * 25000;
     } while (!isPrime(q) || q === p);
   
     // Calcular o módulo
@@ -105,17 +107,17 @@ function isPrime(num) {
   
   // Exemplo de uso
   function main(){
-  let keys = generateRSAKeys();
-  let publicKey = keys.publicKey;
-  let privateKey = keys.privateKey;
-  
-  let message = "Pneumoultramicroscopicossilicovulcanoconiótico";
-  let encryptedMessage = encrypt(message, publicKey);
-  let decryptedMessage = decrypt(encryptedMessage, privateKey);
-  
-  console.log("Mensagem original:", message);
-  console.log("Mensagem criptografada:", encryptedMessage);
-  console.log("Mensagem decodificada:", decryptedMessage);
+    let keys = generateRSAKeys();
+    let publicKey = keys.publicKey;
+    let privateKey = keys.privateKey;
+    
+    let message = "Pneumoultramicroscopicossilicovulcanoconiótico";
+    let encryptedMessage = encrypt(message, publicKey);
+    let decryptedMessage = decrypt(encryptedMessage, privateKey);
+    
+    console.log("Mensagem original:", message);
+    console.log("Mensagem criptografada:", encryptedMessage);
+    console.log("Mensagem decodificada:", decryptedMessage);
  }
 
 module.exports= {
